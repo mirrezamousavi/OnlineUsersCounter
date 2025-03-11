@@ -21,7 +21,7 @@ namespace OnlineUsersCounter
         public async Task<int> GetOnlineUsersCountAsync()
         {
             var server = _redis.GetServer(_redis.GetEndPoints().First());
-            var keys = server.Keys(pattern: $"{OnlineUsersKey}:*").ToArray();
+            var keys = await Task.Run(() => server.Keys(pattern: $"{OnlineUsersKey}:*").ToArray());
             return keys.Length;
         }
     }
